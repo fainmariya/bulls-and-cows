@@ -29,4 +29,7 @@ describe("isValidGuess", () => {
   it("accepts a valid hexadecimal guess", () => {
     expect(isValidGuess("1aF9", 4, 16)).toBe(true);
   });
+  it("rejects duplicate hexadecimal digits regardless of case", () => {
+    expect(isValidGuess("Aa12", 4, 16)).toBe(false);
+  });
 });

@@ -1,7 +1,14 @@
+import { createDigitValidator } from "./createDigitValidator";
 export function isValidGuess(
-  _guess: string,
-  _length: number,
-  _base: number,
+  guess: string,
+  length: number,
+  base: number,
 ): boolean {
-  return false;
+  if (guess.length !== length) {
+    return false;
+  }
+  const validateDigit = createDigitValidator(base);
+  const chars = [...guess];
+  const uniqueDigits = new Set(chars.map((char) => char.toLowerCase()));
+  return chars.every(validateDigit) && uniqueDigits.size === chars.length;
 }
