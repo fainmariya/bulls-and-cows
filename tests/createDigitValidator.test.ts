@@ -55,6 +55,11 @@ describe("createDigitValidator", () => {
       expect(validate("g")).toBe(false);
       expect(validate("G")).toBe(false);
     });
+    it("rejects strings that are not a single character", () => {
+      const validate = createDigitValidator(16);
+      expect(validate("ab")).toBe(false);
+      expect(validate("")).toBe(false);
+    });
   });
   describe("Case-insensitive hexadecimal digits", () => {
     it("accepts both uppercase and lowercase hexadecimal letters", () => {
