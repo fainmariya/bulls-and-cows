@@ -6,6 +6,15 @@ import prettierConfig from "eslint-config-prettier";
 export default defineConfig({
   files: ["**/*.{js,ts}"],
   extends: [js.configs.recommended, tseslint.configs.recommended, prettierConfig],
+  rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+      },
+    ],
+  },
 },
-  globalIgnores(["dist/**"])
+  globalIgnores(["dist/**"]),
+  
 );
