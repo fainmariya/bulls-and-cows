@@ -1,9 +1,21 @@
 export function evaluateGuess(
-  _secret: string,
-  _guess: string,
+  secret: string,
+  guess: string,
 ): { bulls: number; cows: number } {
+  const secretDigits = [...secret];
+  const guessDigits = [...guess];
+  const bulls = guessDigits.filter(
+    (digit, index) =>
+      digit.toLowerCase() === secretDigits[index]?.toLowerCase(),
+  ).length;
+  const normalizedSecret = secretDigits.map((digit) => digit.toLowerCase());
+  const cows = guessDigits.filter(
+    (digit, index) =>
+      normalizedSecret.includes(digit.toLowerCase()) &&
+      digit.toLowerCase() !== normalizedSecret[index],
+  ).length;
   return {
-    bulls: 0,
-    cows: 0,
+    bulls,
+    cows,
   };
 }
