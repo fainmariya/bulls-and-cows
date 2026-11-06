@@ -36,4 +36,7 @@ describe("generateSecret", () => {
     generateSecret(4, 16, fakeRandom);
     expect(fakeRandom).toHaveBeenCalled();
   });
+  it("throws an error when length exceeds the available digits", () => {
+    expect(() => generateSecret(4, 2)).toThrow();
+  });
 });
