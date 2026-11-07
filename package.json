@@ -7,7 +7,8 @@
     "test": "vitest run --passWithNoTests",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build": "tsc"
   },
   "lint-staged": {
   "*.{js,ts}": [
