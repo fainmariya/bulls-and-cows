@@ -5,15 +5,30 @@ import { isValidGuess } from "./game/isValidGuess.js";
 import { evaluateGuess } from "./game/evaluateGuess.js";
 import { loadRecords, saveRecords, sortRecords } from "./game/leaderboard.js";
 
+const appContainer = document.createElement("main");
+appContainer.className = "app-container";
+
+document.body.append(appContainer);
+
 const titleGame = document.createElement("h1");
 titleGame.textContent = "Bulls and Cows";
-document.body.append(titleGame);
+appContainer.append(titleGame);
+const settingsContainer = document.createElement("div");
+settingsContainer.className = "game-settings";
 
+appContainer.append(settingsContainer);
 const lengthSelect = document.createElement("select");
 lengthSelect.id = "secret-length";
 lengthSelect.name = "secretLength";
 
-document.body.append(lengthSelect);
+const lengthLabel = document.createElement("label");
+lengthLabel.htmlFor = "secret-length";
+lengthLabel.textContent = "Code length";
+const lengthField = document.createElement("div");
+lengthField.className = "settings-field";
+
+lengthField.append(lengthLabel, lengthSelect);
+settingsContainer.append(lengthField);
 
 for (let length = 2; length <= 6; length++) {
   const option = document.createElement("option");
@@ -27,7 +42,15 @@ const baseSelect = document.createElement("select");
 baseSelect.id = "number-base";
 baseSelect.name = "numberBase";
 
-document.body.append(baseSelect);
+const baseLabel = document.createElement("label");
+baseLabel.htmlFor = "number-base";
+baseLabel.textContent = "Number system";
+
+const baseField = document.createElement("div");
+baseField.className = "settings-field";
+
+baseField.append(baseLabel, baseSelect);
+settingsContainer.append(baseField);
 const numberBases = [
   { label: "Binary (bin)", value: "2" },
   { label: "Octal (oct)", value: "8" },
@@ -44,22 +67,25 @@ numberBases.forEach((base) => {
 const startButton = document.createElement("button");
 startButton.type = "button";
 startButton.textContent = "Start Game";
-
-document.body.append(startButton);
+startButton.className = "btn btn-primary";
 
 const newGameButton = document.createElement("button");
 newGameButton.type = "button";
 newGameButton.textContent = "New Game";
 newGameButton.disabled = true;
+newGameButton.className = "btn btn-secondary";
 
-document.body.append(newGameButton);
 const submitButton = document.createElement("button");
 submitButton.type = "button";
 submitButton.textContent = "Submit Guess";
 submitButton.id = "submit-guess";
+submitButton.className = "btn btn-primary";
 
-document.body.append(submitButton);
+const buttonsContainer = document.createElement("div");
+buttonsContainer.className = "game-buttons";
 
+buttonsContainer.append(startButton, newGameButton, submitButton);
+appContainer.append(buttonsContainer);
 let gameState: GameState | null = null;
 
 startButton.addEventListener("click", () => {
@@ -82,7 +108,7 @@ startButton.addEventListener("click", () => {
 const guessContainer = document.createElement("div");
 guessContainer.id = "guess-container";
 
-document.body.append(guessContainer);
+appContainer.append(guessContainer);
 
 const errorMessage = document.createElement("p");
 errorMessage.id = "guess-error";
@@ -90,7 +116,7 @@ errorMessage.setAttribute("role", "alert");
 const historyContainer = document.createElement("div");
 historyContainer.id = "guess-history";
 
-document.body.append(historyContainer);
+appContainer.append(historyContainer);
 
 guessContainer.after(errorMessage);
 renderGuessCells();
@@ -242,5 +268,67 @@ document.body.append(leaderboardDialog);
 const leaderboardButton = document.createElement("button");
 leaderboardButton.type = "button";
 leaderboardButton.textContent = "🏆 Leaderboard";
+leaderboardButton.className = "btn btn-leaderboard";
 
-document.body.append(leaderboardButton);
+appContainer.append(leaderboardButton);
+
+const leaderboardTitle = document.createElement("h2");
+leaderboardTitle.textContent = "🏆 Leaderboard";
+
+const closeLeaderboardButton = document.createElement("button");
+closeLeaderboardButton.type = "button";
+closeLeaderboardButton.textContent = "✕";
+leaderboardButton.addEventListener("click", () => {
+  renderLeaderboard();
+  leaderboardDialog.showModal();
+});
+
+leaderboardDialog.append(leaderboardTitle, closeLeaderboardButton);
+closeLeaderboardButton.addEventListener("click", () => {
+  leaderboardDialog.close();
+});
+const leaderboardContent = document.createElement("div");
+leaderboardContent.id = "leaderboard-content";
+
+leaderboardDialog.append(leaderboardContent);
+function renderLeaderboard(): void {
+  const records = sortRecords(loadRecords());
+
+  leaderboardContent.replaceChildren();
+
+  const table = document.createElement("table");
+  leaderboardContent.append(table);
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+
+  const headers = ["Mode", "Length", "Attempts", "Time"];
+
+  headers.forEach((header) => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    headerRow.append(th);
+  });
+
+  thead.append(headerRow);
+  table.append(thead);
+  const tbody = document.createElement("tbody");
+  records.forEach((record) => {
+    const row = document.createElement("tr");
+
+    const values = [
+      String(record.base),
+      String(record.length),
+      String(record.attempts),
+      `${(record.timeMs / 1000).toFixed(1)}s`,
+    ];
+
+    values.forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.append(cell);
+    });
+
+    tbody.append(row);
+  });
+  table.append(tbody);
+}

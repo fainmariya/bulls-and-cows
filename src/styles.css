@@ -1,0 +1,251 @@
+:root {
+    font-family: Inter, Arial, sans-serif;
+    color: #273047;
+    background-color: #f6f7fb;
+  }
+  
+  body {
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  .app-container {
+    width: min(100% - 32px, 560px);
+    margin: 48px auto;
+    padding: 32px;
+    background-color: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(31, 41, 55, 0.06);
+    box-sizing: border-box;
+  }
+
+  #guess-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 28px 0;
+  }
+  
+  #guess-container input {
+    width: 56px;
+    height: 64px;
+    box-sizing: border-box;
+    border: 1px solid #dfe3ec;
+    border-radius: 12px;
+    background-color: #fafafd;
+    color: #273047;
+  
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+  }
+  
+  #guess-container input:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+  }
+  .game-settings {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+  
+  .game-settings select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dfe3ec;
+    border-radius: 10px;
+    background-color: #fafafd;
+    color: #273047;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .game-settings select:focus {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 2px;
+  }
+  
+  .game-settings select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .settings-field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .settings-field label {
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .btn {
+    padding: 12px 20px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .btn-primary {
+    background-color: #8b5cf6;
+    color: #ffffff;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background-color: #7c3aed;
+  }
+  
+  .btn-secondary {
+    background-color: #f3efff;
+    color: #7c3aed;
+    border-color: #e9ddff;
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    background-color: #e9ddff;
+  }
+  
+  .btn:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 3px;
+  }
+  
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .game-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  
+  .game-buttons .btn {
+    flex: 1;
+  }
+  @media (max-width: 768px) {
+    #guess-container {
+      gap: 6px;
+    }
+  
+    #guess-container input {
+      width: 0;
+      min-width: 0;
+      flex: 1;
+      height: auto;
+      aspect-ratio: 1;
+      padding: 0;
+      font-size: 22px;
+    }
+  }
+  @media (max-width: 480px) {
+    .game-settings {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  #leaderboard-dialog {
+    width: min(90vw, 520px);
+    max-height: 80vh;
+    box-sizing: border-box;
+    padding: 32px;
+    border: 1px solid #e8eaf0;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: #273047;
+    box-shadow: 0 24px 70px rgba(31, 41, 55, 0.15);
+    overflow-y: auto;
+  }
+  
+  #leaderboard-dialog::backdrop {
+    background-color: rgba(31, 41, 55, 0.45);
+    backdrop-filter: blur(4px);
+  }
+  
+  #leaderboard-dialog h2 {
+    margin: 0 0 24px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #273047;
+  }
+  .btn-leaderboard {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #ffffff;
+    color: #7c3aed;
+    border: 1px solid #ddd6fe;
+  }
+  
+  .btn-leaderboard:hover {
+    background-color: #f5f3ff;
+    border-color: #a78bfa;
+  }
+  
+  .btn-leaderboard:active {
+    background-color: #ede9fe;
+  }
+  #leaderboard-content {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  #leaderboard-content table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  #leaderboard-content th {
+    background-color: #f4f0ff;
+    color: #6d4ac7;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 8px;
+  }
+  
+  #leaderboard-content td {
+    padding: 12px 8px;
+    font-size: 14px;
+    border-bottom: 1px solid #eef0f4;
+  }
+  
+  #leaderboard-content tbody tr:hover {
+    background-color: #faf9ff;
+  }
+  #leaderboard-dialog {
+    position: relative;
+  }
+  
+  #leaderboard-dialog > button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+  
+    background-color: #f4f0ff;
+    color: #7c3aed;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  #leaderboard-dialog > button:hover {
+    background-color: #e9ddff;
+  }
