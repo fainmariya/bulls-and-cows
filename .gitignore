@@ -1,0 +1,5 @@
+node_modules/ 
+dist/ 
+.env
+site/
+bulls-and-cows-site.zip
